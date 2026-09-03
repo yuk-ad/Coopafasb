@@ -30,3 +30,70 @@ const yearElement = document.getElementById('year');
 if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
 }
+
+const productCarousel = document.getElementById('productCarousel');
+const productSlides = document.querySelectorAll('.product-slide');
+const carouselIndicators = document.querySelectorAll('.carousel-indicator');
+const previousButton = document.querySelector('.carousel-button-prev');
+const nextButton = document.querySelector('.carousel-button-next');
+let currentSlideIndex = 0;
+let carouselTimer;
+
+function showProductSlide(slideIndex) {
+    currentSlideIndex = (slideIndex + productSlides.length) % productSlides.length;
+
+    productSlides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlideIndex);
+    });
+
+    carouselIndicators.forEach((indicator, index) => {
+        const isActive = index === currentSlideIndex;
+        indicator.classList.toggle('active', isActive);
+        indicator.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+}
+
+function startCarousel() {
+    carouselTimer = setInterval(() => {
+        showProductSlide(currentSlideIndex + 1);
+    }, 5000);
+}
+
+function resetCarouselTimer() {
+    clearInterval(carouselTimer);
+    startCarousel();
+}
+
+if (productCarousel && productSlides.length > 0) {
+    previousButton.addEventListener('click', () => {
+        showProductSlide(currentSlideIndex - 1);
+        resetCarouselTimer();
+    });
+
+    nextButton.addEventListener('click', () => {
+        showProductSlide(currentSlideIndex + 1);
+        resetCarouselTimer();
+    });
+
+    carouselIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showProductSlide(index);
+            resetCarouselTimer();
+        });
+    });
+
+    productCarousel.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+    productCarousel.addEventListener('mouseleave', startCarousel);
+    productCarousel.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            showProductSlide(currentSlideIndex - 1);
+            resetCarouselTimer();
+        }
+        if (event.key === 'ArrowRight') {
+            showProductSlide(currentSlideIndex + 1);
+            resetCarouselTimer();
+        }
+    });
+
+    startCarousel();
+}

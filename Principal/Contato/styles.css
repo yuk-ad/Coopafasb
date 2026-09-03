@@ -4,8 +4,13 @@
     box-sizing: border-box;
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
 body {
     font-family: 'Arial', sans-serif;
+    line-height: 1.5;
     padding-top: 60px;
     display: flex;
     flex-direction: column;
@@ -75,6 +80,7 @@ body {
 }
 
 .nav-link {
+    border-bottom: 2px solid transparent;
     color: #fff;
     text-decoration: none;
     font-weight: 500;
@@ -88,7 +94,7 @@ body {
 
 .nav-link.active {
     color: #4CAF50;
-    border-bottom: 2px solid #4CAF50;
+    border-bottom-color: #4CAF50;
     padding-bottom: 5px;
 }
 
@@ -98,6 +104,13 @@ main {
     margin: 0 auto;
     flex: 1;
     width: 100%;
+}
+
+main h1 {
+    color: #3F6E73;
+    line-height: 1.2;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .footer {
@@ -152,7 +165,7 @@ main {
     }
 
     .nav-link.active {
-        border-bottom: none;
+        border-bottom: 1px solid #4CAF50;
         background-color: #4CAF50;
         color: #fff;
     }
